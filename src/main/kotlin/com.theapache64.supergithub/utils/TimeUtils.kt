@@ -13,11 +13,15 @@ object TimeUtils {
     private const val YEAR_MILLIS = 12 * MONTH_MILLIS
 
 
-    fun getRelativeTime(presentDate: Date, pastDate: Date): String {
+    fun getRelativeTime(presentDate: Date, pastDate: Date): String? {
 
         val past = pastDate.getTime()
         val present = presentDate.getTime()
         val diff = present - past
+
+        if (diff < 0) {
+            return null
+        }
 
         return when {
 
