@@ -8,7 +8,7 @@ object GitHubRepo {
     private const val BASE_URL = "https://api.github.com"
     suspend fun getRepo(repoPath: String): GetRepoResponse {
         val url = "$BASE_URL/repos/$repoPath"
-
+        println("Getting created date from API... $url")
         return window.fetch(url)
             .await()
             .json()

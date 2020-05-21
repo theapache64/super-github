@@ -6,7 +6,9 @@ import com.theapache64.supergithub.utils.TimeUtils
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLHeadingElement
+import org.w3c.dom.set
 import kotlin.browser.document
+import kotlin.browser.localStorage
 import kotlin.browser.window
 import kotlin.dom.appendText
 import kotlin.js.Date
@@ -15,9 +17,14 @@ suspend fun main() {
     println("Current window URL is ${window.location}")
     val repoPath = PathUtils.getRepoPath(window.location.href)
     if (repoPath != null) {
-        val repo = GitHubRepo.getRepo(repoPath)
-        if (repo.created_at != null) {
-            val repoCreatedDate = Date(repo.created_at)
+
+        val repoCreatedAt = localStorage.getItem(repoPath) ?: GitHubRepo.getRepo(repoPath).created_at
+
+        if (repoCreatedAt != null) {
+
+            localStorage.setItem(repoPath, repoCreatedAt)
+
+            val repoCreatedDate = Date(repoCreatedAt)
             val timesAgo = TimeUtils.getRelativeTime(Date(), repoCreatedDate)
             if (timesAgo != null) {
                 val h1 =
