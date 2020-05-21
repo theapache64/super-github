@@ -1,0 +1,20 @@
+plugins {
+    id 'org.jetbrains.kotlin.js' version '1.3.72'
+}
+
+group 'com.theapache64'
+version 'v1.0.0-alpha01'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-js"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-js"
+
+	// Kotlinx Coroutines Core:Coroutines support libraries for Kotlin
+	implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.3.7'
+}
+
+kotlin.target.browser { }
