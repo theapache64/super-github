@@ -26,7 +26,7 @@ suspend fun main() {
                 if (h1 != null) {
 
                     h1.innerHTML += """
-                        <span id="sg_created_at" style="font-size: 16px;margin-bottom: 4px;"> 
+                        <span id="sg_created_at" title="$repoCreatedDate" style="font-size: 16px;margin-bottom: 4px;"> 
                         Created $timesAgo
                         </span>
                     """.trimIndent()
