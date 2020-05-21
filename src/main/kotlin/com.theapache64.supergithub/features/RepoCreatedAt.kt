@@ -3,7 +3,6 @@ package com.theapache64.supergithub.features
 import com.theapache64.supergithub.data.repositories.GitHubRepo
 import com.theapache64.supergithub.utils.PathUtils
 import com.theapache64.supergithub.utils.TimeUtils
-import org.w3c.dom.set
 import kotlin.browser.document
 import kotlin.browser.localStorage
 import kotlin.browser.window
