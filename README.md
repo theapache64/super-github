@@ -21,6 +21,8 @@ If the time
 
 #### :bar_chart: Profile Summary
 
+![](extras/profile-summary-demo.gif)
+
 Click on the chart icon to view profile summary.
 
 ![](https://i.imgur.com/KfRyc7y.png)
