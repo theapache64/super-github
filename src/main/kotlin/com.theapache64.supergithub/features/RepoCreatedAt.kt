@@ -33,8 +33,9 @@ class RepoCreatedAt : BaseFeature {
                     if (h1 != null) {
 
                         h1.innerHTML += """
-                        <span id="sg_created_at" title="$repoCreatedDate" style="font-size: 16px;margin-bottom: 4px;"> 
-                        $timeEmoji Created $timesAgo
+                        $timeEmoji
+                        <span id="sg_created_at" title="$repoCreatedDate" style="font-size: 14px;margin-bottom: 4px;"> 
+                        Created $timesAgo
                         </span>
                     """.trimIndent()
 
@@ -53,13 +54,17 @@ class RepoCreatedAt : BaseFeature {
     }
 
     private fun getTimeEmoji(repoCreatedAt: Date): String {
-        return when (repoCreatedAt.getHours()) {
-            in 0..5 -> "🌙"
-            in 5..10 -> "🌞"
-            in 10..15 -> "☀️"
-            in 15..19 -> "🌥"
-            else -> "🌓"
+        val emojiCode = when (repoCreatedAt.getHours()) {
+            in 0..5 -> "1f319" // "🌙"
+            in 5..10 -> "1f31e" // "🌞"
+            in 10..15 -> "2600" // "☀️"
+            in 15..19 -> "1f325" // "🌥"
+            else -> "1f313" // "🌓"
         }
+
+        return """
+            <img id="sg_emoji" style="margin-bottom: 10px; margin-right: 6px;" class="emoji" alt="first_quarter_moon" height="20" width="20" src="https://github.githubassets.com/images/icons/emoji/unicode/$emojiCode.png">
+        """.trimIndent()
     }
 
 }
