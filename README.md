@@ -1,18 +1,18 @@
-# super-github
+# super-github :rocket:
 
 Enhance your GitHub experience
 
-## Features
+## Features :paintbrush:
 
-### **Repo created date**
+### Repo Birth Date :baby_bottle:
+
+Ever wondered when's your favorite repo born ?
 
 ![](https://i.imgur.com/jtbQWHz.png)
 
-**What does the emoji mean?**
+The emoji specifies project started time.
 
-It's the time when the project started.
-
-If the project started
+If the time
 
 - between 12AM and 5AM : 🌙
 - between 5AM and 10AM : 🌞
@@ -20,7 +20,24 @@ If the project started
 - between 3PM and 7PM : 🌥
 - after 7PM :  🌓
 
+### Profile Summary :bar_chart:
+
+Click on the chart icon to view profile summary.
+
+![](https://i.imgur.com/KfRyc7y.png)
+
+It also supports organizations too.
+
+![](https://i.imgur.com/cpkP1OY.png)
+
+Thanks to [@tipsy](https://github.com/tipsy/profile-summary-for-github) for his hard work. :hugs:
+
 ## TODO :ballot_box_with_check:
 
 - [x] Repo created at
-- [ ] Profile summary
+- [x] Profile summary
+- [ ] Do you have a feature in mind? Let's discuss it [here](https://github.com/theapache64/super-github/issues/new?labels=enhancement)
+
+## Author :writing_hand:
+
+- theapache64
