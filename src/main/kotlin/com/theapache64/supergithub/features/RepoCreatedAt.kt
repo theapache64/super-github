@@ -31,6 +31,7 @@ class RepoCreatedAt : BaseFeature {
 
                     val h1 =
                         document.querySelector("#js-repo-pjax-container > div.pagehead.repohead.hx_repohead.readability-menu.bg-gray-light.pb-0 > div > div > h1")
+                    //document.querySelector("body > div.application-main > div > main > div.pagehead.repohead.hx_repohead.readability-menu.bg-gray-light.pb-0.pt-0.pt-lg-3 > div.d-flex.mb-4.p-responsive.d-none.d-lg-flex > div > h1")
 
                     if (h1 != null) {
 
@@ -58,16 +59,17 @@ class RepoCreatedAt : BaseFeature {
     }
 
     private fun getTimeEmoji(repoCreatedAt: Date): String {
-        val emojiCode = when (repoCreatedAt.getHours()) {
-            in 0..5 -> "1f319" // "🌙"
-            in 5..10 -> "1f31e" // "🌞"
-            in 10..15 -> "2600" // "☀️"
-            in 15..19 -> "1f325" // "🌥"
-            else -> "1f313" // "🌓"
+
+        val time: Pair<String, String> = when (repoCreatedAt.getHours()) {
+            in 0..5 -> Pair("Midnight", "1f319") // "🌙"
+            in 5..10 -> Pair("Morning", "1f31e") // "🌞"
+            in 10..15 -> Pair("Noon", "2600") // "☀️"
+            in 15..19 -> Pair("Evening", "1f325") // "🌥"
+            else -> Pair("Night", "1f313") // "🌓"
         }
 
         return """
-            <img id="sg_emoji" style="margin-bottom: 10px; margin-right: 6px;" class="emoji" alt="first_quarter_moon" height="20" width="20" src="https://github.githubassets.com/images/icons/emoji/unicode/$emojiCode.png">
+            <img id="sg_emoji" title="${time.first}" style="margin-bottom: 10px; margin-right: 6px;" class="emoji" height="20" width="20" src="https://github.githubassets.com/images/icons/emoji/unicode/${time.second}.png">
         """.trimIndent()
     }
 
