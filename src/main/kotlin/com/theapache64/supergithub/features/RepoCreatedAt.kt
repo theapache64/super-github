@@ -40,7 +40,7 @@ class RepoCreatedAt : BaseFeature {
                         h1.innerHTML += """
                         $timeEmoji
                         <span id="sg_created_at" title="$repoCreatedDate" style="font-size: 14px;margin-bottom: 4px;"> 
-                        Created $timesAgo
+                        Born $timesAgo
                         </span>
                     """.trimIndent()
 

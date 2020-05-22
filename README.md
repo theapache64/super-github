@@ -34,7 +34,7 @@ Thanks to [@tipsy](https://github.com/tipsy/profile-summary-for-github) for his 
 
 ## TODO :ballot_box_with_check:
 
-- [x] Repo created at
+- [x] Repo birth date
 - [x] Profile summary
 - [ ] Do you have a feature in mind? Let's discuss it [here](https://github.com/theapache64/super-github/issues/new?labels=enhancement)
 
