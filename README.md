@@ -10,6 +10,8 @@ Enhance your GitHub experience
 
 **What does the emoji mean?**
 
+It's the time when the project started.
+
 If the project started
 
 - between 12AM and 5AM : 🌙
