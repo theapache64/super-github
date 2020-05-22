@@ -11,6 +11,8 @@ import kotlin.js.Date
 class RepoCreatedAt : BaseFeature {
 
     override suspend fun onGitHubPageLoaded() {
+        println("Finding repo created date")
+
 
         val repoPath = PathUtils.getRepoPath(window.location.href)
         if (repoPath != null) {
@@ -28,9 +30,11 @@ class RepoCreatedAt : BaseFeature {
                 if (timesAgo != null) {
 
                     val h1 =
-                        document.querySelector("#js-repo-pjax-container > div.pagehead.repohead.hx_repohead.readability-menu.bg-gray-light.pb-0.pt-3 > div > div > h1")
+                        document.querySelector("#js-repo-pjax-container > div.pagehead.repohead.hx_repohead.readability-menu.bg-gray-light.pb-0 > div > div > h1")
 
                     if (h1 != null) {
+
+                        println("Added created date")
 
                         h1.innerHTML += """
                         $timeEmoji
