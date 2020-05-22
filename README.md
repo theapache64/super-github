@@ -1,11 +1,10 @@
-# super-github :rocket:
+# :rocket: super-github
 
 Enhance your GitHub experience
 
-## Features :paintbrush:
+## :paintbrush: Features
 
-### Repo Birth Date :baby_bottle:
-
+#### :baby_bottle: Repo Birth Date
 Ever wondered when's your favorite repo born ?
 
 ![](https://i.imgur.com/jtbQWHz.png)
@@ -20,7 +19,7 @@ If the time
 - between 3PM and 7PM : 🌥
 - after 7PM :  🌓
 
-### Profile Summary :bar_chart:
+#### :bar_chart: Profile Summary
 
 Click on the chart icon to view profile summary.
 
@@ -32,12 +31,12 @@ It also supports organizations too.
 
 Thanks to [@tipsy](https://github.com/tipsy/profile-summary-for-github) for his hard work. :hugs:
 
-## TODO :ballot_box_with_check:
+## :ballot_box_with_check: TODO
 
 - [x] Repo birth date
 - [x] Profile summary
 - [ ] Do you have a feature in mind? Let's discuss it [here](https://github.com/theapache64/super-github/issues/new?labels=enhancement)
 
-## Author :writing_hand:
+## :writing_hand: Author
 
 - theapache64
