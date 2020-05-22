@@ -7,12 +7,20 @@ object PathUtils {
     fun getRepoPath(fulUrl: String): String? {
         val slashSplit = fulUrl.split("/")
         if (slashSplit.size >= 5) {
-            return "${slashSplit[3]}/${slashSplit[4]}"
+            return "${slashSplit[3]}/${slashSplit[4]}".trim()
         }
         return null
     }
 
     fun isProfilePage(url: String): Boolean {
         return url.matches(PROFILE_REGEX)
+    }
+
+    fun getUsername(fulUrl: String): String? {
+        val slashSplit = fulUrl.split("/")
+        if (slashSplit.size >= 4) {
+            return slashSplit[3].trim()
+        }
+        return null
     }
 }
