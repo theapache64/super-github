@@ -1,5 +1,6 @@
 package com.theapache64.supergithub
 
+import com.theapache64.supergithub.features.AutoApproveComment
 import com.theapache64.supergithub.features.BaseFeature
 import com.theapache64.supergithub.features.ProfileSummary
 import com.theapache64.supergithub.features.RepoCreatedAt
@@ -28,7 +29,8 @@ suspend fun runSuperGithub() {
 
     val features = listOf(
         RepoCreatedAt(),
-        ProfileSummary()
+        ProfileSummary(),
+        AutoApproveComment()
     )
 
     for (feature in features) {

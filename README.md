@@ -24,7 +24,7 @@ If the time
 ![](extras/profile-summary-demo.gif)
 
 Click on the chart icon to view profile summary.
-
+Idhoke
 ![](https://i.imgur.com/KfRyc7y.png)
 
 It also supports organizations too.

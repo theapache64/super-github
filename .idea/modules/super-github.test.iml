@@ -7,7 +7,9 @@
           <sourceSet>super-github.main</sourceSet>
         </sourceSets>
         <newMppModelJpsModuleKind>COMPILATION_AND_SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
-        <externalSystemTestTasks>browserTest|super-github:test|Js</externalSystemTestTasks>
+        <externalSystemTestTasks>
+          <externalSystemTestTask>browserTest|super-github:test|Js</externalSystemTestTask>
+        </externalSystemTestTasks>
         <compilerSettings />
         <compilerArguments>
           <option name="outputFile" value="$MODULE_DIR$/../../build/js/packages/super-github-test/kotlin/super-github-test.js" />
