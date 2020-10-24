@@ -3,9 +3,9 @@ package com.theapache64.supergithub.features
 import com.theapache64.supergithub.data.repositories.GitHubRepo
 import com.theapache64.supergithub.utils.PathUtils
 import com.theapache64.supergithub.utils.TimeUtils
-import kotlin.browser.document
-import kotlin.browser.localStorage
-import kotlin.browser.window
+import kotlinx.browser.document
+import kotlinx.browser.localStorage
+import kotlinx.browser.window
 import kotlin.js.Date
 
 class RepoCreatedAt : BaseFeature {

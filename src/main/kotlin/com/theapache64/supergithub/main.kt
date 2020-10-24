@@ -8,8 +8,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.w3c.dom.HTMLSpanElement
-import kotlin.browser.document
-import kotlin.browser.window
+import kotlinx.browser.document
+import kotlinx.browser.window
 
 
 var prevUrl = window.location.toString()

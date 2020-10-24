@@ -2,7 +2,7 @@ package com.theapache64.supergithub.data.repositories
 
 import com.theapache64.supergithub.data.remote.repos.GetRepoResponse
 import kotlinx.coroutines.await
-import kotlin.browser.window
+import kotlinx.browser.window
 
 object GitHubRepo {
 

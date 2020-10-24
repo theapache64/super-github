@@ -1,8 +1,8 @@
 package com.theapache64.supergithub.features
 
 import com.theapache64.supergithub.utils.PathUtils
-import kotlin.browser.document
-import kotlin.browser.window
+import kotlinx.browser.document
+import kotlinx.browser.window
 
 class ProfileSummary : BaseFeature {
     override suspend fun onGitHubPageLoaded() {
