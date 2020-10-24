@@ -34,7 +34,8 @@ suspend fun runSuperGithub() {
     )
 
     for (feature in features) {
-        println("Executing feature...")
+        println("--------------------------")
+        println("Executing feature -> ${feature::class.simpleName}...")
         feature.onGitHubPageLoaded()
     }
 }

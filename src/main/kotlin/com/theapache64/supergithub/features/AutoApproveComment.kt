@@ -13,9 +13,9 @@ class AutoApproveComment : BaseFeature {
 
         private val approveActions = mapOf(
             "approve" to arrayOf(
-                "LGTM. Please merge",
-                "Wow. Good job mate. LGTM, Feel free to merge",
-                "Cool. LGTM. Please merge"
+                "LGTM 👌. Feel free to merge",
+                "Wow. Good job mate 👍. Feel free to merge",
+                "Cool. LGTM. Please merge 🚀"
             )
         )
 

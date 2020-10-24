@@ -10,7 +10,7 @@ class ProfileSummary : BaseFeature {
         if (PathUtils.isProfilePage(url)) {
 
             val profileNameElement =
-                document.querySelector("#js-pjax-container > div > div.h-card.col-lg-3.col-md-4.col-12.float-md-left.pr-md-3.pr-xl-6 > div:nth-child(2) > div.vcard-names-container.float-left.col-9.col-md-12.pt-1.pt-md-3.pb-1.pb-md-3.js-sticky.js-user-profile-sticky-fields > h1 > span.p-name.vcard-fullname.d-block.overflow-hidden")
+                document.querySelector("#js-pjax-container > div.container-xl.px-3.px-md-4.px-lg-5 > div > div.flex-shrink-0.col-12.col-md-3.mb-4.mb-md-0 > div > div.clearfix.d-flex.d-md-block.flex-items-center.mb-4.mb-md-0 > div.vcard-names-container.float-left.col-10.col-md-12.pt-1.pt-md-3.pb-1.pb-md-3.js-sticky.js-user-profile-sticky-fields > h1 > span.p-name.vcard-fullname.d-block.overflow-hidden")
 
             val username = PathUtils.getUsername(url)
             if (username == null) {
@@ -18,8 +18,10 @@ class ProfileSummary : BaseFeature {
                 return
             }
 
-            if (profileNameElement != null) {
+            println("Username is $username")
 
+            if (profileNameElement != null) {
+                println("Okay")
                 val summaryButton = getSummaryButton(username)
                 profileNameElement.innerHTML += summaryButton
 
