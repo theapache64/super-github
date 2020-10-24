@@ -33,6 +33,12 @@ It also supports organizations too.
 
 Thanks to [@tipsy](https://github.com/tipsy/profile-summary-for-github) for his hard work. :hugs:
 
+#### 👌 Auto Comment (PR Approval) 
+
+![](extras/auto_comment.gif)
+
+Every time you click on the `Approve` radio button, your comment box will be filled with a random LGTM message.
+
 ## :ballot_box_with_check: TODO
 
 - [x] Repo birth date
