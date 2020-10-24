@@ -4,8 +4,8 @@ object PathUtils {
 
     private val PROFILE_REGEX = "^https:\\/\\/github\\.com\\/\\w+\\/?\$".toRegex()
 
-    fun getRepoPath(fulUrl: String): String? {
-        val slashSplit = fulUrl.split("/")
+    fun getRepoPath(fullUrl: String): String? {
+        val slashSplit = fullUrl.split("/")
         if (slashSplit.size >= 5) {
             return "${slashSplit[3]}/${slashSplit[4]}".trim()
         }
@@ -16,8 +16,8 @@ object PathUtils {
         return url.matches(PROFILE_REGEX)
     }
 
-    fun getUsername(fulUrl: String): String? {
-        val slashSplit = fulUrl.split("/")
+    fun getUsername(fullUrl: String): String? {
+        val slashSplit = fullUrl.split("/")
         if (slashSplit.size >= 4) {
             return slashSplit[3].trim()
         }

@@ -7,7 +7,7 @@ Enhance your GitHub experience
 #### :baby_bottle: Repo Birth Date
 Ever wondered when's your favorite repo born ?
 
-![](https://i.imgur.com/jtbQWHz.png)
+![](https://i.imgur.com/D0dVc4Z.png)
 
 The emoji specifies project started time.
 
@@ -37,6 +37,7 @@ Thanks to [@tipsy](https://github.com/tipsy/profile-summary-for-github) for his 
 
 - [x] Repo birth date
 - [x] Profile summary
+- [x] Random `LGTM` message for PR approval
 - [ ] Do you have a feature in mind? Let's discuss it [here](https://github.com/theapache64/super-github/issues/new?labels=enhancement)
 
 ## :writing_hand: Author
