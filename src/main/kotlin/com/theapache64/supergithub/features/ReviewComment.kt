@@ -5,7 +5,7 @@ import org.w3c.dom.events.EventListener
 import kotlin.browser.document
 import kotlin.browser.window
 
-class PRApproveAutoComment : BaseFeature {
+class ReviewComment : BaseFeature {
 
     companion object {
         private val PR_REVIEW_PAGE_URL_REGEX =
