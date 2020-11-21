@@ -9,7 +9,7 @@ class ReviewComment : BaseFeature {
 
     companion object {
         private val PR_REVIEW_PAGE_URL_REGEX =
-            "https:\\/\\/github\\.com\\/.+?\\/.+?\\/pull\\/\\d+?\\/files#submit-review".toRegex()
+            "https:\\/\\/github\\.com\\/.+?\\/.+?\\/pull\\/\\d+?\\/files".toRegex()
 
         private val approveActions = mapOf(
             "approve" to arrayOf(
