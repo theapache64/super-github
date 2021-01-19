@@ -2,7 +2,7 @@ package com.theapache64.supergithub.utils
 
 object PathUtils {
 
-    private val PROFILE_REGEX = "^https:\\/\\/github\\.com\\/\\w+\\/?\$".toRegex()
+    private val PROFILE_REGEX = "^https:\\/\\/github\\.com\\/[\\w-]+\\/?\$".toRegex()
 
     fun getRepoPath(fullUrl: String): String? {
         val slashSplit = fullUrl.split("/")
