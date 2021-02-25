@@ -10,7 +10,7 @@ import org.w3c.dom.events.EventListener
 class FoldableContent : BaseFeature {
     companion object {
         private val COMMENTABLE_PAGE_URL_REGEX =
-            "https:\\/\\/github\\.com\\/.+?\\/.+?\\/(issues|pull)\\/\\d+.+".toRegex()
+            "https:\\/\\/github\\.com\\/.+?\\/.+?\\/(issues|pull)\\/\\d+.*".toRegex()
 
         private const val TARGET_CONTAINER_SELECTOR =
             "#issuecomment-new > div.border-0.border-md.timeline-comment.timeline-comment--caret > form > fieldset > tab-container > div.comment-form-head.tabnav.d-flex.flex-justify-between.mb-2.p-0.tabnav--responsive.flex-column.border-bottom-0.mb-0.mb-lg-2.flex-items-stretch.border-lg-bottom.color-border-primary.flex-lg-items-center.flex-lg-row > markdown-toolbar > div.flex-nowrap.d-none.d-md-inline-block.mr-3"
