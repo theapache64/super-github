@@ -1,3 +1,5 @@
+![](cover.jpeg)
+
 # :rocket: super-github
 
 Enhance your GitHub experience
@@ -5,11 +7,7 @@ Enhance your GitHub experience
 
 ## Install
 
-### Chrome
-
-- Step 1 : Download `super-github.zip` file from [releases](https://github.com/theapache64/super-github/releases/latest) and extract it. 
-- Step 2 : Open extensions tab (`chrome://extensions`) and turn on `Developer Mode`
-- Step 4 : Click `Load unpacked` and select the extracted folder :star:
+Open an issue, and I'll publish it in Chrome store 😉
 
 ## :paintbrush: Features
 
