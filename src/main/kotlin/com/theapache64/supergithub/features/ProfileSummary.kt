@@ -5,12 +5,15 @@ import kotlinx.browser.document
 import kotlinx.browser.window
 
 class ProfileSummary : BaseFeature {
+    companion object{
+        private const val PROFILE_NAME_SELECTOR = "#js-pjax-container > div.container-xl.px-3.px-md-4.px-lg-5 > div > div.flex-shrink-0.col-12.col-md-3.mb-4.mb-md-0 > div > div.clearfix.d-flex.d-md-block.flex-items-center.mb-4.mb-md-0 > div.vcard-names-container.float-left.col-12.py-3.js-sticky.js-user-profile-sticky-fields > h1 > span.p-name.vcard-fullname.d-block.overflow-hidden"
+        private const val ORG_SELECTOR = "#js-pjax-container > div > div > div.border-bottom.color-border-secondary.mb-3.pb-md-3 > div > form > div"
+    }
     override suspend fun onGitHubPageLoaded() {
         val url = window.location.href
         if (PathUtils.isProfilePage(url)) {
 
-            val profileNameElement =
-                document.querySelector("#js-pjax-container > div.container-xl.px-3.px-md-4.px-lg-5 > div > div.flex-shrink-0.col-12.col-md-3.mb-4.mb-md-0 > div > div.clearfix.d-flex.d-md-block.flex-items-center.mb-4.mb-md-0 > div.vcard-names-container.float-left.col-10.col-md-12.pt-1.pt-md-3.pb-1.pb-md-3.js-sticky.js-user-profile-sticky-fields > h1 > span.p-name.vcard-fullname.d-block.overflow-hidden")
+            val profileNameElement = document.querySelector(PROFILE_NAME_SELECTOR)
 
             val username = PathUtils.getUsername(url)
             if (username == null) {
@@ -29,7 +32,7 @@ class ProfileSummary : BaseFeature {
 
                 // Maybe organization
                 val element =
-                    document.querySelector("#js-pjax-container > div > div > div.border-bottom.border-gray-light.mb-3.pb-md-3 > div > form > div")
+                    document.querySelector(ORG_SELECTOR)
                 if (element != null) {
                     val html = getSummaryButton(username, "margin-top: 4px; margin-right:10px;")
                     element.innerHTML = "$html ${element.innerHTML}"
