@@ -1,9 +1,9 @@
 package com.theapache64.supergithub.features
 
-import org.w3c.dom.events.Event
-import org.w3c.dom.events.EventListener
 import kotlinx.browser.document
 import kotlinx.browser.window
+import org.w3c.dom.events.Event
+import org.w3c.dom.events.EventListener
 
 class ReviewComment : BaseFeature {
 
@@ -15,7 +15,8 @@ class ReviewComment : BaseFeature {
             "approve" to arrayOf(
                 "LGTM 👌. Feel free to merge",
                 "Wow. Good job mate 👍. Feel free to merge",
-                "Cool. LGTM. Please merge 🚀"
+                "Cool. LGTM. Please merge 🚀",
+                "Hell of a job 👍. LGTM. Please merge",
             )
         )
 

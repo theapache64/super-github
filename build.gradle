@@ -1,9 +1,9 @@
 plugins {
-    id 'org.jetbrains.kotlin.js' version '1.4.10'
+    id 'org.jetbrains.kotlin.js' version '1.5.0'
 }
 
 group 'com.theapache64'
-version 'v1.0.0-alpha01'
+version 'v1.0.3'
 
 repositories {
     mavenCentral()
