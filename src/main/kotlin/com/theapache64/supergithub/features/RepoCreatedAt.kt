@@ -29,15 +29,15 @@ class RepoCreatedAt : BaseFeature {
                 val timesAgo = TimeUtils.getRelativeTime(Date(), repoCreatedDate)
                 if (timesAgo != null) {
 
-                    val h1 =
-                        document.querySelector("#js-repo-pjax-container > div.color-bg-secondary.pt-3.hide-full-screen.mb-5 > div.d-flex.mb-3.px-3.px-md-4.px-lg-5 > div")
+                    val div =
+                        document.querySelector("#repository-container-header > div.d-flex.mb-3.px-3.px-md-4.px-lg-5 > div")
                     //document.querySelector("body > div.application-main > div > main > div.pagehead.repohead.hx_repohead.readability-menu.bg-gray-light.pb-0.pt-0.pt-lg-3 > div.d-flex.mb-4.p-responsive.d-none.d-lg-flex > div > h1")
 
-                    if (h1 != null) {
+                    if (div != null) {
 
                         println("Added created date")
 
-                        h1.innerHTML += """
+                        div.innerHTML += """
                         $timeEmoji
                         <span id="sg_created_at" title="$repoCreatedDate" style="font-size: 18px; color:#5a5a5a"> 
                         Born $timesAgo

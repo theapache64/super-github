@@ -2,7 +2,7 @@
 <module version="4">
   <component name="FacetManager">
     <facet type="kotlin-language" name="Kotlin">
-      <configuration version="3" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false" isTestModule="true" externalProjectId="super-github" pureKotlinSourceFolders="$MODULE_DIR$/../../src/test/kotlin;/home/theapache64/Documents/projects/super-github/src/main/kotlin;/home/theapache64/Documents/projects/super-github/build/externals/super-github/src">
+      <configuration version="3" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false" isTestModule="true" externalProjectId="super-github" pureKotlinSourceFolders="$MODULE_DIR$/../../src/test/kotlin;/Users/theapache64/Documents/projects/super-github/src/main/kotlin;/Users/theapache64/Documents/projects/super-github/build/externals/super-github/src;/Users/theapache64/Documents/projects/super-github/src/main/kotlin;/Users/theapache64/Documents/projects/super-github/build/externals/super-github/src;/Users/theapache64/Documents/projects/super-github/src/test/kotlin">
         <sourceSets>
           <sourceSet>super-github.main</sourceSet>
         </sourceSets>
@@ -19,8 +19,8 @@
           <option name="target" value="v5" />
           <option name="moduleKind" value="umd" />
           <option name="main" value="call" />
-          <option name="languageVersion" value="1.4" />
-          <option name="apiVersion" value="1.4" />
+          <option name="languageVersion" value="1.5" />
+          <option name="apiVersion" value="1.5" />
           <option name="pluginOptions">
             <array />
           </option>
