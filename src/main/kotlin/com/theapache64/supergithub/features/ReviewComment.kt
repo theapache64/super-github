@@ -2,6 +2,7 @@ package com.theapache64.supergithub.features
 
 import kotlinx.browser.document
 import kotlinx.browser.window
+import org.w3c.dom.HTMLTextAreaElement
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventListener
 
@@ -9,16 +10,22 @@ class ReviewComment : BaseFeature {
 
     companion object {
         private val PR_REVIEW_PAGE_URL_REGEX =
-            "https:\\/\\/github\\.com\\/.+?\\/.+?\\/pull\\/\\d+?\\/files".toRegex()
+            "https:\\/\\/github\\.com\\/.+?\\/.+?\\/pull\\/\\d+?\\/files.*".toRegex()
 
-        private val approveActions = mapOf(
-            "approve" to arrayOf(
+        private val reviewActions = mapOf(
+            "approve" to listOf(
                 "LGTM 👌. Feel free to merge",
                 "Wow. Good job mate 👍. Feel free to merge",
                 "Cool. LGTM. Please merge 🚀",
-                "Hell of a job 👍. LGTM. Please merge",
+                "Hell of a job 👍. LGTM. Please merge"
+            ),
+            "comment" to listOf(
+                "I am comment value 1",
+                "I am comment value 2",
             )
         )
+
+        private val allMessages = reviewActions.values.flatten()
 
         private const val RADIO_SELECTOR =
             "#review-changes-modal > div > div > div > form > div > label > input[type=radio]"
@@ -30,9 +37,9 @@ class ReviewComment : BaseFeature {
 
         if (isPrReviewUrl) {
 
-            for (action in approveActions.keys) {
+            for (action in reviewActions.keys) {
 
-                val messages = approveActions[action] ?: error("TSH: Couldn't find key $action")
+                val messages = reviewActions[action] ?: error("TSH: Couldn't find key $action")
 
                 document
                     .querySelector("$RADIO_SELECTOR[value=$action]")
@@ -40,16 +47,18 @@ class ReviewComment : BaseFeature {
                         element.addEventListener("click", object : EventListener {
                             override fun handleEvent(event: Event) {
                                 document.querySelector("#pull_request_review_body")?.let { commentTextArea ->
-                                    val currentComment = commentTextArea.textContent
+                                    val currentComment = (commentTextArea as HTMLTextAreaElement).value
                                     println("Current comment is '$currentComment'")
-                                    // Either comment should be empty or any of the approve message should be the content
-                                    if (currentComment?.isBlank() == true || messages.contains(currentComment)) {
-                                        commentTextArea.textContent = messages.random()
+                                    // Either comment should be empty or any of the messages should be the content
+                                    if (currentComment.isBlank() || allMessages.contains(currentComment)) {
+                                        val newMessage = messages.random()
+                                        console.log("Changing review message to $newMessage")
+                                        commentTextArea.value = newMessage
                                     }
                                 }
                             }
                         })
-                    }
+                    } ?: console.error("Uhh ho! failed to find the element")
             }
 
 
