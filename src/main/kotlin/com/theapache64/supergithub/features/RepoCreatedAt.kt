@@ -33,7 +33,8 @@ class RepoCreatedAt : BaseFeature {
                         document.querySelector("#repository-container-header > div.d-flex.mb-3.px-3.px-md-4.px-lg-5 > div")
                     //document.querySelector("body > div.application-main > div > main > div.pagehead.repohead.hx_repohead.readability-menu.bg-gray-light.pb-0.pt-0.pt-lg-3 > div.d-flex.mb-4.p-responsive.d-none.d-lg-flex > div > h1")
 
-                    if (div != null) {
+                    val hasBirthDate = div?.querySelector("span#sg_created_at") != null
+                    if (div != null && !hasBirthDate) {
 
                         println("Added created date")
 
