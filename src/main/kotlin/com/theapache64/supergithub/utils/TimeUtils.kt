@@ -2,6 +2,7 @@ package com.theapache64.supergithub.utils
 
 import kotlin.js.Date
 import kotlin.math.floor
+import kotlin.math.round
 
 object TimeUtils {
 
@@ -67,7 +68,7 @@ object TimeUtils {
             }
 
             else -> {
-                "${floor(diff / YEAR_MILLIS)} years ago";
+                "${round(diff / YEAR_MILLIS)} years ago";
             }
         }
     }
