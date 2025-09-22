@@ -7,7 +7,19 @@ Enhance your GitHub experience
 
 ## Install
 
+You can install Super GitHub in two ways:
+
+### Option 1: Chrome Web Store (Coming Soon)
 Open an issue, and I'll publish it in Chrome store 😉
+
+### Option 2: Manual Installation from Releases
+1. Go to the [Releases page](https://github.com/theapache64/super-github/releases)
+2. Download the latest `super-github-vX.X.X.zip` file
+3. Extract the ZIP file to a folder
+4. Open Chrome and navigate to `chrome://extensions/`
+5. Enable "Developer mode" in the top right
+6. Click "Load unpacked" and select the extracted folder
+7. The Super GitHub extension is now installed and active!
 
 ## :paintbrush: Features
 
@@ -70,3 +82,36 @@ Press `v` key on PR file review pages to quickly mark files as "Viewed". The key
 ## :writing_hand: Author
 
 - theapache64
+
+## :gear: Development & Releases
+
+### Creating a New Release
+
+This project includes an automated release workflow. To create a new release:
+
+1. Go to the [Actions tab](https://github.com/theapache64/super-github/actions)
+2. Select "Create Chrome Extension Release" workflow
+3. Click "Run workflow"
+4. Enter the new version number (e.g., `1.0.5`)
+5. Click "Run workflow"
+
+The workflow will:
+- Update version numbers in `build.gradle` and `manifest.json`
+- Build the Chrome extension
+- Create a ZIP package
+- Commit the version changes
+- Create a Git tag
+- Create a GitHub release with the ZIP file attached
+
+### Local Development
+
+Requirements:
+- Java 11 (for Gradle compatibility)
+- Gradle (included via wrapper)
+
+Build the extension locally:
+```bash
+./gradlew assemble
+```
+
+The built extension files will be in `build/distributions/`.
