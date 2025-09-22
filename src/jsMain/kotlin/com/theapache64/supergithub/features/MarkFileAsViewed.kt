@@ -3,6 +3,8 @@ package com.theapache64.supergithub.features
 import kotlinx.browser.document
 import kotlinx.browser.window
 import org.w3c.dom.HTMLInputElement
+import org.w3c.dom.HTMLButtonElement
+import org.w3c.dom.Element
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.KeyboardEvent
 import org.w3c.dom.events.EventListener
@@ -13,8 +15,14 @@ class MarkFileAsViewed : BaseFeature {
         private val PR_FILES_PAGE_URL_REGEX =
             "https:\\/\\/github\\.com\\/.+?\\/.+?\\/pull\\/\\d+?\\/files.*".toRegex()
         
-        // Multiple selectors to try for the "Viewed" checkbox in PR file diff
-        private val VIEWED_CHECKBOX_SELECTORS = listOf(
+        // Multiple selectors to try for the "Viewed" checkbox/button in PR file diff
+        private val VIEWED_ELEMENT_SELECTORS = listOf(
+            // New button-based selectors
+            "button[aria-describedby*='loading-announcement']:has([data-component='text']:contains('Viewed'))",
+            "button:has([data-component='text']:contains('Viewed'))",
+            "button[data-component='buttonContent']:has(span:contains('Viewed'))",
+            "button:has(span:contains('Viewed'))",
+            // Legacy checkbox selectors
             "input[type='checkbox'][name='viewed']",
             "input[type='checkbox'][data-path]",
             "input[type='checkbox'].js-reviewed-checkbox",
@@ -47,29 +55,38 @@ class MarkFileAsViewed : BaseFeature {
                         console.log("'v' key pressed, attempting to mark file as viewed")
                         
                         // Find the currently focused or hovered file section
-                        val activeFileCheckbox = findActiveFileViewedCheckbox()
-                        
-                        if (activeFileCheckbox != null) {
-                            val wasChecked = activeFileCheckbox.checked
-                            // Toggle the checkbox
-                            activeFileCheckbox.checked = !activeFileCheckbox.checked
-                            
-                            // Trigger the change event to ensure GitHub's JavaScript handlers are called
-                            val changeEvent = Event("change")
-                            activeFileCheckbox.dispatchEvent(changeEvent)
-                            
-                            // Also trigger click event for better compatibility
-                            val clickEvent = Event("click")
-                            activeFileCheckbox.dispatchEvent(clickEvent)
-                            
-                            val filePath = activeFileCheckbox.getAttribute("data-path") ?: "unknown file"
-                            val action = if (wasChecked) "unmarked" else "marked"
-                            console.log("Successfully $action file as viewed: $filePath")
-                            
+                        val activeFileElement = findActiveFileViewedElement()
+
+                        if (activeFileElement != null) {
+                            if (activeFileElement is HTMLInputElement) {
+                                // Handle legacy checkbox
+                                val wasChecked = activeFileElement.checked
+                                activeFileElement.checked = !activeFileElement.checked
+
+                                // Trigger events
+                                val changeEvent = Event("change")
+                                activeFileElement.dispatchEvent(changeEvent)
+                                val clickEvent = Event("click")
+                                activeFileElement.dispatchEvent(clickEvent)
+
+                                val filePath = activeFileElement.getAttribute("data-path") ?: "unknown file"
+                                val action = if (wasChecked) "unmarked" else "marked"
+                                console.log("Successfully $action file as viewed: $filePath")
+                            } else if (activeFileElement is HTMLButtonElement) {
+                                // Handle new button format
+                                val wasPressed = activeFileElement.getAttribute("aria-pressed") == "true"
+
+                                // Click the button to toggle its state
+                                activeFileElement.click()
+
+                                val action = if (wasPressed) "unmarked" else "marked"
+                                console.log("Successfully $action file as viewed via button")
+                            }
+
                             // Prevent default action to avoid typing 'v' in text fields
                             event.preventDefault()
                         } else {
-                            console.log("No file checkbox found to mark as viewed")
+                            console.log("No file checkbox or button found to mark as viewed")
                         }
                     }
                 }
@@ -90,10 +107,10 @@ class MarkFileAsViewed : BaseFeature {
         }
     }
     
-    private fun findActiveFileViewedCheckbox(): HTMLInputElement? {
-        // Try different strategies to find the appropriate checkbox
-        
-        // Strategy 1: Find checkbox based on current focus or mouse position
+    private fun findActiveFileViewedElement(): Element? {
+        // Try different strategies to find the appropriate element
+
+        // Strategy 1: Find element based on current focus or mouse position
         val activeElement = document.activeElement
         var currentElement = activeElement
         
@@ -106,16 +123,16 @@ class MarkFileAsViewed : BaseFeature {
                 currentElement.getAttribute("data-tagsearch-path") != null ||
                 currentElement.getAttribute("data-path") != null) {
                 
-                // Found a file container, now find its viewed checkbox
-                val filePath = currentElement.getAttribute("data-path") ?: 
+                // Found a file container, now find its viewed element
+                val filePath = currentElement.getAttribute("data-path") ?:
                               currentElement.getAttribute("data-tagsearch-path")
                 
                 if (filePath != null) {
-                    // Try to find checkbox with specific file path
-                    for (selector in VIEWED_CHECKBOX_SELECTORS) {
-                        val checkbox = currentElement.querySelector(selector) as? HTMLInputElement
-                        if (checkbox != null) {
-                            return checkbox
+                    // Try to find element with specific file path
+                    for (selector in VIEWED_ELEMENT_SELECTORS) {
+                        val element = currentElement.querySelector(selector)
+                        if (element != null) {
+                            return element
                         }
                     }
                 }
@@ -124,22 +141,38 @@ class MarkFileAsViewed : BaseFeature {
             currentElement = currentElement.parentElement
         }
         
-        // Strategy 2: Find the first unchecked checkbox
-        for (selector in VIEWED_CHECKBOX_SELECTORS) {
-            val allCheckboxes = document.querySelectorAll(selector)
-            for (i in 0 until allCheckboxes.length) {
-                val checkbox = allCheckboxes.item(i) as? HTMLInputElement
-                if (checkbox != null && !checkbox.checked) {
-                    return checkbox
+        // Strategy 2: Look for buttons with "Viewed" text that are not pressed
+        val viewedButtons = document.querySelectorAll("button")
+        for (i in 0 until viewedButtons.length) {
+            val button = viewedButtons.item(i) as? HTMLButtonElement
+            if (button != null) {
+                val textContent = button.textContent?.lowercase()
+                if (textContent?.contains("viewed") == true &&
+                    button.getAttribute("aria-pressed") != "true") {
+                    return button
+                }
+            }
+        }
+
+        // Strategy 3: Find the first unchecked checkbox (legacy support)
+        for (selector in VIEWED_ELEMENT_SELECTORS) {
+            if (selector.contains("input[type='checkbox']")) {
+                val allCheckboxes = document.querySelectorAll(selector)
+                for (i in 0 until allCheckboxes.length) {
+                    val checkbox = allCheckboxes.item(i) as? HTMLInputElement
+                    if (checkbox != null && !checkbox.checked) {
+                        return checkbox
+                    }
                 }
             }
         }
         
-        // Strategy 3: Return the first checkbox found (if any)
-        for (selector in VIEWED_CHECKBOX_SELECTORS) {
-            val allCheckboxes = document.querySelectorAll(selector)
-            if (allCheckboxes.length > 0) {
-                return allCheckboxes.item(0) as? HTMLInputElement
+        // Strategy 4: Return the first button with "Viewed" text found (if any)
+        val allViewedButtons = document.querySelectorAll("button")
+        for (i in 0 until allViewedButtons.length) {
+            val button = allViewedButtons.item(i) as? HTMLButtonElement
+            if (button != null && button.textContent?.lowercase()?.contains("viewed") == true) {
+                return button
             }
         }
         
