@@ -51,12 +51,20 @@ Every time you click on the `Approve` radio button, your comment box will be fil
 Helps you write foldable code blocks when you paste code/stacktrace into a comment body. 
 Watch the demo  [here](https://twitter.com/theapache64/status/1365004116003446793)
 
+### ⌨️ Mark File as Viewed
+
+Press `v` key on PR file review pages to quickly mark files as "Viewed". The keyboard shortcut will:
+- Mark the currently focused file as viewed/unviewed
+- If no specific file is focused, mark the first unviewed file
+- Work on any GitHub Pull Request files page
+
 ## :ballot_box_with_check: TODO
 
 - [x] Repo birth date
 - [x] Profile summary
 - [x] Random `LGTM` message for PR approval
 - [x] Foldable code
+- [x] Mark file as viewed with keyboard shortcut
 - [ ] Do you have a feature in mind? Let's discuss it [here](https://github.com/theapache64/super-github/issues/new?labels=enhancement)
 
 ## :writing_hand: Author
