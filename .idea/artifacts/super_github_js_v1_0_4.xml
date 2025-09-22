@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="super-github-js-v1.0.4">
+    <output-path>$PROJECT_DIR$/build/libs</output-path>
+    <root id="archive" name="super-github-js-v1.0.4.jar" />
+  </artifact>
+</component>

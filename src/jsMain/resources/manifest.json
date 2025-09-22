@@ -2,7 +2,7 @@
   "name": "Super Github",
   "version": "1.0.4",
   "description": "Enhance your GitHub experience",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
@@ -18,7 +18,7 @@
       "js": [
         "super-github.js"
       ],
-      "runat": "document_end"
+      "run_at": "document_end"
     }
   ]
 }
