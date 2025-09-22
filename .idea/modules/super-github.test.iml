@@ -2,35 +2,33 @@
 <module version="4">
   <component name="FacetManager">
     <facet type="kotlin-language" name="Kotlin">
-      <configuration version="3" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false" isTestModule="true" externalProjectId="super-github" pureKotlinSourceFolders="$MODULE_DIR$/../../src/test/kotlin;/Users/theapache64/Documents/projects/super-github/src/main/kotlin;/Users/theapache64/Documents/projects/super-github/build/externals/super-github/src;/Users/theapache64/Documents/projects/super-github/src/main/kotlin;/Users/theapache64/Documents/projects/super-github/build/externals/super-github/src;/Users/theapache64/Documents/projects/super-github/src/test/kotlin">
-        <sourceSets>
-          <sourceSet>super-github.main</sourceSet>
-        </sourceSets>
+      <configuration version="5" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false" isTestModule="true" externalProjectId="super-github" isHmppProject="true">
         <newMppModelJpsModuleKind>COMPILATION_AND_SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
         <externalSystemTestTasks>
-          <externalSystemTestTask>browserTest|super-github:test|js</externalSystemTestTask>
+          <externalSystemTestTask>browserTest|:|js|js</externalSystemTestTask>
         </externalSystemTestTasks>
-        <compilerSettings />
+        <compilerSettings>
+          <option name="additionalArguments" value="-Xir-module-name=com.theapache64:super-github_test -Xir-per-module-output-name=super-github-test -Xir-produce-klib-dir -main call" />
+        </compilerSettings>
         <compilerArguments>
-          <option name="outputFile" value="$MODULE_DIR$/../../build/js/packages/super-github-test/kotlin/super-github-test.js" />
-          <option name="noStdlib" value="true" />
-          <option name="sourceMap" value="true" />
-          <option name="metaInfo" value="true" />
-          <option name="target" value="v5" />
-          <option name="moduleKind" value="umd" />
-          <option name="main" value="call" />
-          <option name="languageVersion" value="1.5" />
-          <option name="apiVersion" value="1.5" />
-          <option name="pluginOptions">
-            <array />
-          </option>
-          <option name="pluginClasspaths">
-            <array />
-          </option>
-          <option name="multiPlatform" value="true" />
-          <option name="errors">
-            <ArgumentParseErrors />
-          </option>
+          <flagArguments>
+            <flagArg name="metaInfo" arg="true" />
+            <flagArg name="noStdlib" arg="true" />
+            <flagArg name="sourceMap" arg="true" />
+          </flagArguments>
+          <stringArguments>
+            <stringArg name="moduleKind" arg="umd" />
+            <stringArg name="moduleName" arg="super-github_test" />
+            <stringArg name="outputDir" arg="$MODULE_DIR$/../../build/classes/kotlin/test" />
+            <stringArg name="sourceMapEmbedSources" arg="never" />
+            <stringArg name="target" arg="v5" />
+            <stringArg name="apiVersion" arg="1.9" />
+            <stringArg name="languageVersion" arg="1.9" />
+          </stringArguments>
+          <arrayArguments>
+            <arrayArg name="pluginClasspaths" />
+            <arrayArg name="pluginOptions" />
+          </arrayArguments>
         </compilerArguments>
       </configuration>
     </facet>
