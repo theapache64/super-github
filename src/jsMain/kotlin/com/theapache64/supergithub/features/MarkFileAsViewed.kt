@@ -13,11 +13,14 @@ class MarkFileAsViewed : BaseFeature {
 
     companion object {
         private val PR_FILES_PAGE_URL_REGEX =
-            "https:\\/\\/github\\.com\\/.+?\\/.+?\\/pull\\/\\d+?\\/files.*".toRegex()
-        
+            "https://github\\.com/.+?/.+?/pull/\\d+?/files.*".toRegex()
+
         // Multiple selectors to try for the "Viewed" checkbox/button in PR file diff
         private val VIEWED_ELEMENT_SELECTORS = listOf(
-            // New button-based selectors
+            // New button-based selectors for current GitHub structure
+            "button[aria-pressed]", // Buttons with aria-pressed attribute
+            "button[class*='MarkAsViewedButton']", // Buttons with MarkAsViewedButton class
+            "button:has([data-component='text']:contains('Viewed'))", // Buttons containing "Viewed" text
             "button[aria-describedby*='loading-announcement']:has([data-component='text']:contains('Viewed'))",
             "button:has([data-component='text']:contains('Viewed'))",
             "button[data-component='buttonContent']:has(span:contains('Viewed'))",
@@ -37,7 +40,7 @@ class MarkFileAsViewed : BaseFeature {
 
         if (isPrFilesUrl) {
             console.log("Setting up Mark File as Viewed keyboard shortcut on: $url")
-            
+
             // Add keyboard event listener for the 'v' key
             document.addEventListener("keydown", object : EventListener {
                 override fun handleEvent(event: Event) {
@@ -54,8 +57,8 @@ class MarkFileAsViewed : BaseFeature {
                         
                         console.log("'v' key pressed, attempting to mark file as viewed")
                         
-                        // Find the currently focused or hovered file section
-                        val activeFileElement = findActiveFileViewedElement()
+                        // Find the first available viewed element
+                        val activeFileElement = findFirstViewedElement()
 
                         if (activeFileElement != null) {
                             if (activeFileElement is HTMLInputElement) {
@@ -86,7 +89,7 @@ class MarkFileAsViewed : BaseFeature {
                             // Prevent default action to avoid typing 'v' in text fields
                             event.preventDefault()
                         } else {
-                            console.log("No file checkbox or button found to mark as viewed")
+                            console.log("No file checkbox or button found")
                         }
                     }
                 }
@@ -107,41 +110,8 @@ class MarkFileAsViewed : BaseFeature {
         }
     }
     
-    private fun findActiveFileViewedElement(): Element? {
-        // Try different strategies to find the appropriate element
-
-        // Strategy 1: Find element based on current focus or mouse position
-        val activeElement = document.activeElement
-        var currentElement = activeElement
-        
-        // Look for the nearest file diff container
-        while (currentElement != null) {
-            // Check if this is a file diff container (common GitHub class patterns)
-            val classList = currentElement.classList
-            if (classList.contains("file") || 
-                classList.contains("file-header") || 
-                currentElement.getAttribute("data-tagsearch-path") != null ||
-                currentElement.getAttribute("data-path") != null) {
-                
-                // Found a file container, now find its viewed element
-                val filePath = currentElement.getAttribute("data-path") ?:
-                              currentElement.getAttribute("data-tagsearch-path")
-                
-                if (filePath != null) {
-                    // Try to find element with specific file path
-                    for (selector in VIEWED_ELEMENT_SELECTORS) {
-                        val element = currentElement.querySelector(selector)
-                        if (element != null) {
-                            return element
-                        }
-                    }
-                }
-                break
-            }
-            currentElement = currentElement.parentElement
-        }
-        
-        // Strategy 2: Look for buttons with "Viewed" text that are not pressed
+    private fun findFirstViewedElement(): Element? {
+        // Strategy 1: Look for buttons with "Viewed" text that are not pressed
         val viewedButtons = document.querySelectorAll("button")
         for (i in 0 until viewedButtons.length) {
             val button = viewedButtons.item(i) as? HTMLButtonElement
@@ -154,7 +124,7 @@ class MarkFileAsViewed : BaseFeature {
             }
         }
 
-        // Strategy 3: Find the first unchecked checkbox (legacy support)
+        // Strategy 2: Find the first unchecked checkbox (legacy support)
         for (selector in VIEWED_ELEMENT_SELECTORS) {
             if (selector.contains("input[type='checkbox']")) {
                 val allCheckboxes = document.querySelectorAll(selector)
@@ -167,7 +137,7 @@ class MarkFileAsViewed : BaseFeature {
             }
         }
         
-        // Strategy 4: Return the first button with "Viewed" text found (if any)
+        // Strategy 3: Return the first button with "Viewed" text found (if any)
         val allViewedButtons = document.querySelectorAll("button")
         for (i in 0 until allViewedButtons.length) {
             val button = allViewedButtons.item(i) as? HTMLButtonElement
