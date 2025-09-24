@@ -2,7 +2,6 @@ package com.theapache64.supergithub
 
 import com.theapache64.supergithub.features.FoldableContent
 import com.theapache64.supergithub.features.MarkFileAsViewed
-import com.theapache64.supergithub.features.ReviewComment
 import com.theapache64.supergithub.features.ProfileSummary
 import com.theapache64.supergithub.features.RepoCreatedAt
 import com.theapache64.supergithub.utils.StringUtils
@@ -33,7 +32,6 @@ suspend fun runSuperGithub() {
     val features = listOf(
         RepoCreatedAt(),
         ProfileSummary(),
-        ReviewComment(),
         FoldableContent(),
         MarkFileAsViewed()
     )

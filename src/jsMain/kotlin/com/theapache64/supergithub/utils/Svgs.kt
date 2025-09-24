@@ -2,7 +2,7 @@ package com.theapache64.supergithub.utils
 
 val foldableSvg by lazy {
     """
-        <svg class="" xml:space="preserve" style="enable-background:new 0 0 512 512;margin-top: 1px;" viewBox="0 0 479.265 479.265" y="0" x="0" height="16" width="16" version="1.1" xmlns:svgjs="http://svgjs.com/svgjs" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g>
+        <svg class="" xml:space="preserve" style="enable-background:new 0 0 512 512;margin-top: 0px;" viewBox="0 0 479.265 479.265" y="0" x="0" height="16" width="16" version="1.1" xmlns:svgjs="http://svgjs.com/svgjs" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g>
         <g xmlns="http://www.w3.org/2000/svg">
         	<g>
         		<path d="M98.632,79.565c-6.6,0-12,5.4-12,12s5.4,12,12,12s12-5.4,12-12S105.332,79.565,98.632,79.565z" fill="#8b949e" data-original="#000000" style="" class=""></path>
