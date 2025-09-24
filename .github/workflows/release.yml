@@ -1,0 +1,102 @@
+name: Create Chrome Extension Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number (e.g., 1.0.5)'
+        required: true
+        type: string
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up JDK 11
+      uses: actions/setup-java@v4
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        
+    - name: Validate version format
+      run: |
+        VERSION="${{ github.event.inputs.version }}"
+        if [[ ! $VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+          echo "Error: Version must be in format x.y.z (e.g., 1.0.5)"
+          exit 1
+        fi
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+        
+    - name: Update version in build.gradle
+      run: |
+        sed -i "s/version 'v[0-9]\+\.[0-9]\+\.[0-9]\+'/version 'v${{ env.VERSION }}'/" build.gradle
+        
+    - name: Update version in manifest.json
+      run: |
+        sed -i 's/"version": "[0-9]\+\.[0-9]\+\.[0-9]\+"/"version": "${{ env.VERSION }}"/' src/main/resources/manifest.json
+        
+    - name: Verify version updates
+      run: |
+        echo "=== Updated build.gradle ==="
+        grep "version 'v" build.gradle
+        echo "=== Updated manifest.json ==="
+        grep '"version":' src/main/resources/manifest.json
+        
+    - name: Make gradlew executable
+      run: chmod +x ./gradlew
+      
+    - name: Build Chrome extension
+      run: ./gradlew assemble
+      
+    - name: Create extension ZIP
+      run: |
+        cd build/distributions
+        zip -r "super-github-v${{ env.VERSION }}.zip" ./*
+        ls -la super-github-v${{ env.VERSION }}.zip
+        
+    - name: Commit version updates
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add build.gradle src/main/resources/manifest.json
+        git commit -m "Update version to v${{ env.VERSION }}"
+        git push
+        
+    - name: Create Git tag
+      run: |
+        git tag "v${{ env.VERSION }}"
+        git push origin "v${{ env.VERSION }}"
+        
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: "v${{ env.VERSION }}"
+        name: "Super GitHub v${{ env.VERSION }}"
+        body: |
+          ## Super GitHub v${{ env.VERSION }}
+          
+          Chrome extension that enhances your GitHub experience.
+          
+          ### Installation
+          1. Download the `super-github-v${{ env.VERSION }}.zip` file
+          2. Extract the ZIP file
+          3. Open Chrome and go to `chrome://extensions/`
+          4. Enable "Developer mode"
+          5. Click "Load unpacked" and select the extracted folder
+          
+          ### Features
+          - Repo birth date with emoji indicators
+          - Profile summary with charts
+          - Auto LGTM comments for PR approvals
+          - Foldable code blocks in comments
+          - Mark files as viewed with 'v' keyboard shortcut
+        files: |
+          build/distributions/super-github-v${{ env.VERSION }}.zip
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
