@@ -34,7 +34,7 @@ class ProfileSummary : BaseFeature {
                 val element =
                     document.querySelector(ORG_SELECTOR)
                 if (element != null) {
-                    val html = getSummaryButton(username, "margin-top: 4px; margin-right:10px;")
+                    val html = getSummaryButton(username, "margin-top: 2px; margin-right:10px;")
                     element.innerHTML = "$html ${element.innerHTML}"
                 } else {
                     println("Query selector failed")
