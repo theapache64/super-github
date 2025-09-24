@@ -45,7 +45,7 @@ jobs:
       - name: Package Chrome Extension
         run: |
           cd build/dist/js/productionExecutable
-          zip -r ../../../../../chrome-extension.zip *
+          zip -r ../../../../chrome-extension.zip *
 
       - name: Publish to Chrome Web Store
         id: publish
