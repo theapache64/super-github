@@ -30,7 +30,7 @@ class RepoCreatedAt : BaseFeature {
                 if (timesAgo != null) {
 
                     val div =
-                        document.querySelector("#repository-container-header > div.d-flex.mb-3.px-3.px-md-4.px-lg-5 > div")
+                        document.querySelector("div#repo-title-component")
                     //document.querySelector("body > div.application-main > div > main > div.pagehead.repohead.hx_repohead.readability-menu.bg-gray-light.pb-0.pt-0.pt-lg-3 > div.d-flex.mb-4.p-responsive.d-none.d-lg-flex > div > h1")
 
                     val hasBirthDate = div?.querySelector("span#sg_created_at") != null
@@ -70,7 +70,7 @@ class RepoCreatedAt : BaseFeature {
         }
 
         return """
-            <img id="sg_emoji" title="${time.first}" style="margin-top: 6px;" class="emoji" height="17" width="17" src="https://github.githubassets.com/images/icons/emoji/unicode/${time.second}.png">
+            <img id="sg_emoji" title="${time.first}" style="margin-right: 6px;" class="emoji" height="17" width="17" src="https://github.githubassets.com/images/icons/emoji/unicode/${time.second}.png">
         """.trimIndent()
     }
 
