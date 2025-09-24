@@ -6,7 +6,7 @@ import kotlinx.browser.window
 
 class ProfileSummary : BaseFeature {
     companion object{
-        private const val PROFILE_NAME_SELECTOR = "#js-pjax-container > div.container-xl.px-3.px-md-4.px-lg-5 > div > div.Layout-sidebar > div > div.js-profile-editable-replace > div.clearfix.d-flex.d-md-block.flex-items-center.mb-4.mb-md-0 > div.vcard-names-container.float-left.js-profile-editable-names.col-12.py-3.js-sticky.js-user-profile-sticky-fields > h1 > span.p-name.vcard-fullname.d-block.overflow-hidden"
+        private const val PROFILE_NAME_SELECTOR = "h1.vcard-names > span.p-name"
         private const val ORG_SELECTOR = "#org-profile-repositories > div > div.my-3 > div > form > div"
     }
     override suspend fun onGitHubPageLoaded() {
