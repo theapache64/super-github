@@ -48,3 +48,4 @@ jobs:
         with:
           token: ${{ secrets.PAT_TOKEN }}  # Personal Access Token with repo scope
           event-type: manifest-version-changed
+          repository: theapache64/super-github
