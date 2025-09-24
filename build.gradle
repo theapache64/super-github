@@ -4,7 +4,7 @@ plugins {
 
 group 'com.theapache64'
 // [latest version - i promise!]
-version 'v1.0.5'
+version 'v1.0.6'
 
 repositories {
     mavenCentral()
