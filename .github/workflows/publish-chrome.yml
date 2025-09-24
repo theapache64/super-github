@@ -1,0 +1,102 @@
+name: Publish Chrome Extension
+
+on:
+  push:
+    tags:
+      - 'v*'  # Run workflow on version tags, e.g. v1.0.0
+  workflow_dispatch:
+  # Allow manual triggering or triggering from another workflow
+  repository_dispatch:
+    types: [manifest-version-changed]  # Listen for manifest version change events
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch all history for changelog generation
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Build Chrome Extension
+        run: |
+          ./gradlew jsBrowserDistribution
+
+      - name: Verify build success
+        run: |
+          if [ ! -d "build/dist/js/productionExecutable" ]; then
+            echo "Build failed: productionExecutable directory not found"
+            exit 1
+          fi
+
+      - name: Package Chrome Extension
+        run: |
+          cd build/dist/js/productionExecutable
+          zip -r ../../../../../chrome-extension.zip *
+
+      - name: Publish to Chrome Web Store
+        id: publish
+        uses: mnao305/chrome-extension-upload@v4.0.1
+        with:
+          file-path: chrome-extension.zip
+          extension-id: ${{ secrets.EXTENSION_ID }}
+          client-id: ${{ secrets.CLIENT_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
+          refresh-token: ${{ secrets.REFRESH_TOKEN }}
+
+      - name: Extract version from manifest
+        id: get_version
+        run: |
+          VERSION=$(grep -o '"version": "[^"]*"' src/jsMain/resources/manifest.json | cut -d'"' -f4)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          # Get the previous tag
+          PREV_TAG=$(git describe --tags --abbrev=0 --match "v*" HEAD^ 2>/dev/null || echo "")
+
+          if [ -z "$PREV_TAG" ]; then
+            # If no previous tag, use all commits
+            CHANGELOG=$(git log --pretty=format:"* %s (%h)" --no-merges)
+          else
+            # Get commits since the previous tag
+            CHANGELOG=$(git log --pretty=format:"* %s (%h)" --no-merges ${PREV_TAG}..HEAD)
+          fi
+
+          # Escape newlines for GitHub Actions
+          CHANGELOG="${CHANGELOG//'%'/'%25'}"
+          CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
+          CHANGELOG="${CHANGELOG//$'\r'/'%0D'}"
+
+          echo "changelog=$CHANGELOG" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        if: steps.publish.outcome == 'success'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.get_version.outputs.version }}
+          name: Release v${{ steps.get_version.outputs.version }}
+          body: |
+            Version ${{ steps.get_version.outputs.version }} has been published to the Chrome Web Store.
+
+            ## Changelog
+            ${{ steps.changelog.outputs.changelog }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
