@@ -27,6 +27,8 @@ suspend fun main() {
 }
 
 suspend fun runSuperGithub() {
+    // [latest version - i promise!]
+    println("SuperGitHub v1.0.5")
 
     val features = listOf(
         RepoCreatedAt(),

@@ -2,12 +2,12 @@ package com.theapache64.supergithub.features
 
 import kotlinx.browser.document
 import kotlinx.browser.window
-import org.w3c.dom.HTMLInputElement
-import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.Element
+import org.w3c.dom.HTMLButtonElement
+import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
-import org.w3c.dom.events.KeyboardEvent
 import org.w3c.dom.events.EventListener
+import org.w3c.dom.events.KeyboardEvent
 
 class MarkFileAsViewed : BaseFeature {
 
@@ -45,60 +45,34 @@ class MarkFileAsViewed : BaseFeature {
             document.addEventListener("keydown", object : EventListener {
                 override fun handleEvent(event: Event) {
                     val keyEvent = event as KeyboardEvent
-                    
+
                     // Check if 'v' key is pressed (without any modifiers)
                     // Also ensure we're not in an input field
-                    if (keyEvent.key == "v" && 
-                        !keyEvent.ctrlKey && 
-                        !keyEvent.altKey && 
-                        !keyEvent.shiftKey && 
+                    if (keyEvent.key == "v" &&
+                        !keyEvent.ctrlKey &&
+                        !keyEvent.altKey &&
+                        !keyEvent.shiftKey &&
                         !keyEvent.metaKey &&
-                        !isInInputField()) {
-                        
+                        !isInInputField()
+                    ) {
+
                         console.log("'v' key pressed, attempting to mark file as viewed")
-                        
-                        // Find the first available viewed element
-                        val activeFileElement = findFirstViewedElement()
 
-                        if (activeFileElement != null) {
-                            if (activeFileElement is HTMLInputElement) {
-                                // Handle legacy checkbox
-                                val wasChecked = activeFileElement.checked
-                                activeFileElement.checked = !activeFileElement.checked
-
-                                // Trigger events
-                                val changeEvent = Event("change")
-                                activeFileElement.dispatchEvent(changeEvent)
-                                val clickEvent = Event("click")
-                                activeFileElement.dispatchEvent(clickEvent)
-
-                                val filePath = activeFileElement.getAttribute("data-path") ?: "unknown file"
-                                val action = if (wasChecked) "unmarked" else "marked"
-                                console.log("Successfully $action file as viewed: $filePath")
-                            } else if (activeFileElement is HTMLButtonElement) {
-                                // Handle new button format
-                                val wasPressed = activeFileElement.getAttribute("aria-pressed") == "true"
-
-                                // Click the button to toggle its state
-                                activeFileElement.click()
-
-                                val action = if (wasPressed) "unmarked" else "marked"
-                                console.log("Successfully $action file as viewed via button")
-                            }
-
-                            // Prevent default action to avoid typing 'v' in text fields
-                            event.preventDefault()
+                        val uncheckedViewedButton = findFirstUncheckedViewedButton()
+                        if (uncheckedViewedButton != null) {
+                            uncheckedViewedButton.click()
+                            console.log("Marked file as viewed")
                         } else {
-                            console.log("No file checkbox or button found")
+                            console.log("No unchecked 'Viewed' button found")
                         }
                     }
                 }
             })
         } else {
-            console.log("Not a PR files page, skipping Mark File as Viewed feature")
+            console.log("Not a PR files page, skipping Mark File as Viewed feature: $url")
         }
     }
-    
+
     private fun isInInputField(): Boolean {
         val activeElement = document.activeElement
         return when (activeElement?.tagName?.lowercase()) {
@@ -109,7 +83,24 @@ class MarkFileAsViewed : BaseFeature {
             }
         }
     }
-    
+
+    private fun findFirstUncheckedViewedButton(): HTMLButtonElement? {
+        // first button[aria-pressed="false"] in the body element
+        val body = document.body ?: return null
+        val buttons = body.querySelectorAll("button[aria-pressed='false']")
+        for (i in 0 until buttons.length) {
+            val button = buttons.item(i) as? HTMLButtonElement
+            if (button != null) {
+                val textContent = button.textContent?.lowercase()
+                if (textContent?.contains("viewed") == true) {
+                    return button
+                }
+            }
+        }
+        return null
+    }
+
+
     private fun findFirstViewedElement(): Element? {
         // Strategy 1: Look for buttons with "Viewed" text that are not pressed
         val viewedButtons = document.querySelectorAll("button")
@@ -118,7 +109,8 @@ class MarkFileAsViewed : BaseFeature {
             if (button != null) {
                 val textContent = button.textContent?.lowercase()
                 if (textContent?.contains("viewed") == true &&
-                    button.getAttribute("aria-pressed") != "true") {
+                    button.getAttribute("aria-pressed") != "true"
+                ) {
                     return button
                 }
             }
@@ -136,7 +128,7 @@ class MarkFileAsViewed : BaseFeature {
                 }
             }
         }
-        
+
         // Strategy 3: Return the first button with "Viewed" text found (if any)
         val allViewedButtons = document.querySelectorAll("button")
         for (i in 0 until allViewedButtons.length) {
@@ -145,7 +137,7 @@ class MarkFileAsViewed : BaseFeature {
                 return button
             }
         }
-        
+
         return null
     }
 }
