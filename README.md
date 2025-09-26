@@ -65,10 +65,14 @@ Watch the demo  [here](https://twitter.com/theapache64/status/136500411600344679
 
 ### ⌨️ Mark File as Viewed
 
+![](extras/mark_file_as_viewed_demo.png)
+
 Press `v` key on PR file review pages to quickly mark files as "Viewed". The keyboard shortcut will:
 - Mark the currently focused file as viewed/unviewed
 - If no specific file is focused, mark the first unviewed file
 - Work on any GitHub Pull Request files page
+
+> **⚠️ Important:** This feature requires you to enable GitHub's **"new PR experience"**. To enable it, go to your GitHub profile → Settings → Feature preview → Enable "Pull request tree view".
 
 ## :ballot_box_with_check: TODO
 
