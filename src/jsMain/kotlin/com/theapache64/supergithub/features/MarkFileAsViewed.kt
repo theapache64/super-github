@@ -13,7 +13,7 @@ class MarkFileAsViewed : BaseFeature {
 
     companion object {
         private val PR_FILES_PAGE_URL_REGEX =
-            "https://github\\.com/.+?/.+?/pull/\\d+?/files.*".toRegex()
+            "https://github\\.com/.+?/.+?/pull/\\d+?/(files|changes).*".toRegex()
 
         // Multiple selectors to try for the "Viewed" checkbox/button in PR file diff
         private val VIEWED_ELEMENT_SELECTORS = listOf(
